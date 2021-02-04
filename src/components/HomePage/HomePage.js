@@ -98,7 +98,7 @@ class HomePage extends React.Component {
 
     this.ctx.clearRect(0, 0, 800, 400);
     for (let index = this.state.cx.length - 1; index >= 0; index--) {
-      if (this.isPointInsideOfSquare(canvasX, canvasY, this.state.cx[index], this.state.cy[index])) {
+      if (this.isPointInsideOfSquare(canvasX, canvasY, this.state.cx[index], this.state.cy[index]) && !isSelected) {
         isSelected = true;
         console.log("selected ", index)
         this.setState({ selectedIndex: index });
