@@ -39,14 +39,14 @@ class HomePage extends React.Component {
 
   drawSquare = (x, y, ctx, opacity) => {
     // ctx.fillStyle = '#FF8010'; // Fill color of rectangle drawn
-    ctx.globalCompositeOperation = "destination-over";
+    ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = `rgba(${231 - (1 / opacity * 7)}, ${66 + (1 / opacity * 6)}, ${41 + (1 / opacity * 3)}, ${isFinite(opacity) ? (opacity === 1 ? 0.9 : 1 / (1 - opacity)) : 0.9})`; // Fill color of rectangle drawn
     ctx.fillRect(x, y, this.sideOfSquare, this.sideOfSquare); //This will draw a rectangle of 20x20
   }
 
   selectedSquare = (x, y, ctx, opacity) => {
 
-    ctx.globalCompositeOperation = "destination-over";
+    ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = `rgba(0, 0, 0, ${isFinite(opacity) ? (opacity === 1 ? 0.9 : 1 / (1 - opacity)) : 0.9})`; // Fill color of rectangle drawn
     ctx.fillRect(x, y, this.sideOfSquare, this.sideOfSquare); //This will draw a rectangle of 20x20
   }
@@ -59,7 +59,8 @@ class HomePage extends React.Component {
     let index = this.state.cx.length;
     this.state.cx[index] = (this.randomNumber(0, Math.floor(this.canvasWidth - this.constantBoundryGap)));
     this.state.cy[index] = (this.randomNumber(0, Math.floor(this.canvasHeight - this.constantBoundryGap)));
-    this.drawSquare(this.state.cx[index], this.state.cy[index], this.ctx, 1 / index);
+    this.drawSquareWithSelected()
+    // this.drawSquare(this.state.cx[index], this.state.cy[index], this.ctx, 1 / index);
   }
 
   onDelete = () => {
@@ -96,8 +97,8 @@ class HomePage extends React.Component {
   showSelectedSquare = (canvasX, canvasY) => {
     let isSelected = false;
 
-    this.ctx.clearRect(0, 0, 800, 400);
-    for (let index = this.state.cx.length - 1; index >= 0; index--) {
+    this.ctx.clearRect(0, 0, 800, 400);     
+    for (let index = 0; index < this.state.cx.length; index++) {
       if (this.isPointInsideOfSquare(canvasX, canvasY, this.state.cx[index], this.state.cy[index]) && !isSelected) {
         isSelected = true;
         console.log("selected ", index)
@@ -131,7 +132,7 @@ class HomePage extends React.Component {
   }
 
   drawSquareWithSelected = () => {
-    for (let index = this.state.cx.length - 1; index >= 0; index--) {
+    for (let index = 0; index < this.state.cx.length; index++) {
       if (this.state.selectedIndex == index) {
         this.selectedSquare(this.state.cx[index], this.state.cy[index], this.ctx, 1 / index);
       } else {
