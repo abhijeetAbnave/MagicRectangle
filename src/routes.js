@@ -6,17 +6,17 @@ import HomePage from "./components/HomePage/HomePage";
 
 export default () => {
     return (
-    <GuardProvider loading={() => <MagicRectangleLoader/>}>
-        <Suspense fallback={<div><p>Npt wprla</p></div>}>
-            <Switch>
-                <GuardedRoute
-                    path="/"
-                    exact
-                    component={HomePage}
-                    meta={{ guest: true }}
-                />
-            </Switch>
-        </Suspense>
-    </GuardProvider>
+        <GuardProvider loading={() => <MagicRectangleLoader />}>
+            <Suspense fallback={<div><p>Npt wprla</p></div>}>
+                <Switch>
+                    <GuardedRoute
+                        path="/"
+                        exact
+                        component={HomePage}
+                        meta={{ guest: true }}
+                    />
+                </Switch>
+            </Suspense>
+        </GuardProvider>
     )
 }

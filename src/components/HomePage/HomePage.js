@@ -10,7 +10,8 @@ class HomePage extends React.Component {
   state = {
     cx: [],                 //square co-ordinate x
     cy: [],                 //square co-ordinate y 
-    selectedIndex: null     //selected index of square
+    selectedIndex: null,     //selected index of square
+    isKeyboardOn: true,
   }
   stage = null;             //DOM element
   ctx = null;               //getContext element of canvas
@@ -29,7 +30,7 @@ class HomePage extends React.Component {
     this.state.cy[0] = (this.randomNumber(0, Math.floor(this.canvasHeight - this.constantBoundryGap)));
     this.drawSquare(this.state.cx[0], this.state.cy[0], this.ctx, 1);
     document.addEventListener("keydown", event => {                 //Added event lister for keyboard keys press
-      if (this.state.selectedIndex !== null)
+      if (this.state.selectedIndex !== null && this.state.isKeyboardOn)
         this.handleKeyDown(event);
     })
   }
@@ -165,14 +166,33 @@ class HomePage extends React.Component {
     this.drawSquareWithSelected();
   };
 
+  toggleKeyboard = () => {
+    this.setState({ isKeyboardOn: !this.state.isKeyboardOn });
+    if (this.state.isKeyboardOn) {
+      document.addEventListener("keydown", event => {                 //Added event lister for keyboard keys press
+        if (this.state.selectedIndex !== null)
+          this.handleKeyDown(event);
+      })
+    } else {
+      document.removeEventListener("keydown", event => {                 //Added event lister for keyboard keys press
+        if (this.state.selectedIndex !== null)
+          this.handleKeyDown(event);
+      })
+    }
+
+  }
+
   render() {
     return (
       <Fragment>
         <div>
           <canvas onClick={(e) => this.relMouseCoords(e)} width="800" height="400" id="svs" ref={this.canvasArea} className="canvas" ></canvas>
           <div className="col-12">
-            <button onClick={() => this.onAdd()} class="button button-add">Add</button>
-            <button onClick={() => this.onDelete()} class="button button-delete">Delete</button>
+            <button onClick={() => this.onAdd()} className="button button-add">Add</button>
+            <button onClick={() => this.onDelete()} className="button button-delete">Delete</button>
+          </div>
+          <div className="col-12">
+            <button onClick={() => this.toggleKeyboard()} className="button button-toggle">Keyboard Control {this.state.isKeyboardOn ? "On" : "Off"}</button>
           </div>
         </div>
       </Fragment>
