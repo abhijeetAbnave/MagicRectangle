@@ -29,10 +29,12 @@ class HomePage extends React.Component {
     this.state.cx[0] = (this.randomNumber(0, Math.floor(this.canvasWidth - this.constantBoundryGap))); // Setting initial values
     this.state.cy[0] = (this.randomNumber(0, Math.floor(this.canvasHeight - this.constantBoundryGap)));
     this.drawSquare(this.state.cx[0], this.state.cy[0], this.ctx, 1);
-    document.addEventListener("keydown", event => {                 //Added event lister for keyboard keys press
-      if (this.state.selectedIndex !== null && this.state.isKeyboardOn)
-        this.handleKeyDown(event);
-    })
+    document.addEventListener("keydown", event => this.keyboardEventFunction(event))
+  }
+
+  keyboardEventFunction = (event) => {
+    if (this.state.selectedIndex !== null && this.state.isKeyboardOn)
+      this.handleKeyDown(event);
   }
 
   drawSquare = (x, y, ctx, opacity) => {
@@ -166,26 +168,19 @@ class HomePage extends React.Component {
     this.drawSquareWithSelected();
   };
 
-  toggleKeyboard = () => {
-    this.setState({ isKeyboardOn: !this.state.isKeyboardOn });
+  toggleKeyboard = async() => {
+    await this.setState({ isKeyboardOn: !this.state.isKeyboardOn });
     if (this.state.isKeyboardOn) {
-      document.addEventListener("keydown", event => {                 //Added event lister for keyboard keys press
-        if (this.state.selectedIndex !== null)
-          this.handleKeyDown(event);
-      })
+      await document.addEventListener("keydown",event => this.keyboardEventFunction(event))
     } else {
-      document.removeEventListener("keydown", event => {                 //Added event lister for keyboard keys press
-        if (this.state.selectedIndex !== null)
-          this.handleKeyDown(event);
-      })
+      await document.removeEventListener("keydown", event => this.keyboardEventFunction(event), true)
     }
-
   }
 
   render() {
     return (
       <Fragment>
-        <div>
+        <div id="magic-rectangle">
           <canvas onClick={(e) => this.relMouseCoords(e)} width="800" height="400" id="svs" ref={this.canvasArea} className="canvas" ></canvas>
           <div className="col-12">
             <button onClick={() => this.onAdd()} className="button button-add">Add</button>
