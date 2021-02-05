@@ -63,12 +63,15 @@ class HomePage extends React.Component {
     ctx.fillText("ID:"+index, x+10,y+24);
   };
 
-  selectedSquare = (x, y, ctx, opacity) => {
+  selectedSquare = (x, y, ctx, opacity, index) => {
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = `rgba(0, 0, 0, ${
       isFinite(opacity) ? (opacity === 1 ? 0.9 : 1 / (1 - opacity)) : 0.9
     })`; // Fill color of rectangle drawn
     ctx.fillRect(x, y, this.sideOfSquare, this.sideOfSquare); //This will draw a rectangle of 20x20
+    ctx.fillStyle = "white"
+    ctx.font = "10px sans-serif";
+    ctx.fillText("ID:"+index, x+10,y+24);
   };
 
   randomNumber = (min, max) => {
@@ -144,7 +147,8 @@ class HomePage extends React.Component {
           this.state.cx[index],
           this.state.cy[index],
           this.ctx,
-          1 / index
+          1 / index,
+          index
         );
       } else {
         this.drawSquare(
@@ -190,7 +194,8 @@ class HomePage extends React.Component {
           this.state.cx[index],
           this.state.cy[index],
           this.ctx,
-          1 / index
+          1 / index,
+          index
         );
       } else {
         // this.ctx.clearRect(0,0, 800, 400);
