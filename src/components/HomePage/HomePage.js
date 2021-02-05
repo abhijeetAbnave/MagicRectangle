@@ -217,13 +217,13 @@ class HomePage extends React.Component {
       this.onDelete();
       return;
     }
-    if (keyPr === 68 && this.state.cx[this.state.selectedIndex] <= 770) {
+    if (keyPr === 68 && this.state.cx[this.state.selectedIndex] <= 740) {
       this.state.cx[this.state.selectedIndex] += 20; //D key add 20
     } else if (keyPr === 65 && this.state.cx[this.state.selectedIndex] > 10) {
       this.state.cx[this.state.selectedIndex] -= 20; //A key subtract 20
     } else if (keyPr === 87 && this.state.cy[this.state.selectedIndex] > 10) {
       this.state.cy[this.state.selectedIndex] -= 20; //W key subtract 20
-    } else if (keyPr === 83 && this.state.cy[this.state.selectedIndex] <= 380) {
+    } else if (keyPr === 83 && this.state.cy[this.state.selectedIndex] <= 350) {
       this.state.cy[this.state.selectedIndex] += 20; //S key add 20
     }
 
