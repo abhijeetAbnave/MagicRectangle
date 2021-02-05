@@ -1,6 +1,8 @@
 # MagicRectangle
  A 2-Dimensional  place where In a magic rectangle square box will be created and they will explore and vanish in space
 
+Live link for project https://magic-rectangle.herokuapp.com/
+
  How to deploy
 
  1. Clone this repository
