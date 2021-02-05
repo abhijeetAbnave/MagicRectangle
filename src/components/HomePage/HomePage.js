@@ -11,6 +11,7 @@ class HomePage extends React.Component {
   state = {
     cx: [], //square co-ordinate x
     cy: [], //square co-ordinate y
+    pointsArray: [],
     selectedIndex: null, //selected index of square
     isKeyboardOn: true,
   };
@@ -34,6 +35,7 @@ class HomePage extends React.Component {
       0,
       Math.floor(this.canvasHeight - this.constantBoundryGap)
     );
+    this.state.pointsArray[0] = { x: this.state.cx[0], y: this.state.cy[0] }
     this.drawSquare(this.state.cx[0], this.state.cy[0], this.ctx, 1, 0);
     document.addEventListener("keydown", (event) =>
       this.keyboardEventFunction(event)
@@ -88,6 +90,7 @@ class HomePage extends React.Component {
       0,
       Math.floor(this.canvasHeight - this.constantBoundryGap)
     );
+    this.state.pointsArray[index] = { x: this.state.cx[index], y: this.state.cy[index] }
     this.drawSquareWithSelected();
     // this.drawSquare(this.state.cx[index], this.state.cy[index], this.ctx, 1 / index);
   };
@@ -128,16 +131,18 @@ class HomePage extends React.Component {
 
   showSelectedSquare = (canvasX, canvasY) => {
     let isSelected = false;
-
+    let position = this.state.pointsArray.slice().reverse().findIndex((point) => this.isPointInsideOfSquare(
+      canvasX,
+      canvasY,
+      point.x,
+      point.y
+    ))
+    var indexSelected = position >= 0 ? (this.state.cx.length - 1) - position : position;
     this.ctx.clearRect(0, 0, 800, 400);
     for (let index = 0; index < this.state.cx.length; index++) {
       if (
-        this.isPointInsideOfSquare(
-          canvasX,
-          canvasY,
-          this.state.cx[index],
-          this.state.cy[index]
-        ) &&
+        indexSelected !== -1 && 
+        indexSelected === index &&         
         !isSelected
       ) {
         isSelected = true;
@@ -180,6 +185,7 @@ class HomePage extends React.Component {
     if (index != null) {
       this.state.cx.splice(index, 1);
       this.state.cy.splice(index, 1);
+      this.state.pointsArray.splice(index, 1);
       this.state.selectedIndex = null;
       // this.setState({ selectedIndex: null });
       this.ctx.clearRect(0, 0, 800, 400);
