@@ -34,7 +34,7 @@ class HomePage extends React.Component {
       0,
       Math.floor(this.canvasHeight - this.constantBoundryGap)
     );
-    this.drawSquare(this.state.cx[0], this.state.cy[0], this.ctx, 1);
+    this.drawSquare(this.state.cx[0], this.state.cy[0], this.ctx, 1, 0);
     document.addEventListener("keydown", (event) =>
       this.keyboardEventFunction(event)
     );
@@ -45,7 +45,7 @@ class HomePage extends React.Component {
       this.handleKeyDown(event);
   };
 
-  drawSquare = (x, y, ctx, opacity) => {
+  drawSquare = (x, y, ctx, opacity, index=3) => {
     // ctx.fillStyle = '#FF8010'; // Fill color of rectangle drawn
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = `rgba(${231 - (1 / opacity) * 7}, ${
@@ -53,7 +53,14 @@ class HomePage extends React.Component {
     }, ${41 + (1 / opacity) * 3}, ${
       isFinite(opacity) ? (opacity === 1 ? 0.9 : 1 / (1 - opacity)) : 0.9
     })`; // Fill color of rectangle drawn
+    
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = "2";
     ctx.fillRect(x, y, this.sideOfSquare, this.sideOfSquare); //This will draw a rectangle of 20x20
+    ctx.strokeRect(x, y, this.sideOfSquare, this.sideOfSquare);
+    ctx.fillStyle = "black"
+    ctx.font = "10px sans-serif";
+    ctx.fillText("ID:"+index, x+10,y+24);
   };
 
   selectedSquare = (x, y, ctx, opacity) => {
@@ -144,7 +151,8 @@ class HomePage extends React.Component {
           this.state.cx[index],
           this.state.cy[index],
           this.ctx,
-          1 / index
+          1 / index,
+          index
         );
       }
     }
@@ -190,7 +198,8 @@ class HomePage extends React.Component {
           this.state.cx[index],
           this.state.cy[index],
           this.ctx,
-          1 / index
+          1 / index,
+          index
         );
       }
     }
