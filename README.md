@@ -17,3 +17,4 @@ Live link for project https://magic-rectangle.herokuapp.com/
 
  6. To make and consume production build you can type a command "npm run build"
 
+![Project Screenshot](https://github.com/abhijeetAbnave/MagicRectangle/blob/main/src/assets/images/projectScreenshot.jpg?raw=true)
